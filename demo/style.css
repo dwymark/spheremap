@@ -1,0 +1,232 @@
+/* Tufte-inspired light theme: warm off-white, muted charcoal, thin rules,
+   serif for prose, monospaced for numeric readouts. No shadows or gradients. */
+
+:root {
+  --bg:        #fbf7ec;   /* Tufte cream */
+  --panel:    #f6f0e0;
+  --ink:      #2b2b2b;
+  --ink-2:    #5a5a5a;
+  --ink-3:    #8a8a8a;
+  --rule:     #c9beaa;
+  --accent:   #7a2c2c;    /* muted red for highlight */
+  --track:    #d9cfba;
+  --thumb:    #2b2b2b;
+  --serif:    "et-book", Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --mono:     ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header header"
+    "left  main   right"
+    "footer footer footer";
+  height: 100vh;
+  gap: 0;
+}
+
+.app-header {
+  grid-area: header;
+  padding: 12px 20px 8px;
+  border-bottom: 1px solid var(--rule);
+  display: flex; align-items: baseline; gap: 16px;
+}
+.app-title {
+  font-family: var(--serif);
+  font-size: 20px; font-weight: normal;
+  margin: 0;
+}
+.app-subtitle {
+  color: var(--ink-2);
+  font-style: italic;
+  font-size: 14px;
+}
+
+.app-footer {
+  grid-area: footer;
+  padding: 6px 20px;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-3);
+  font-size: 12px;
+  font-family: var(--mono);
+  display: flex; justify-content: space-between;
+}
+
+.panel {
+  overflow-y: auto;
+  padding: 12px 16px 24px;
+  background: var(--panel);
+}
+.panel-left  { grid-area: left;  border-right: 1px solid var(--rule); }
+.panel-right { grid-area: right; border-left: 1px solid var(--rule); }
+
+.map-area {
+  grid-area: main;
+  position: relative;
+  background: var(--bg);
+}
+#map {
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* -- Blocks and section titles ---------------------------------------- */
+
+.block {
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px dotted var(--rule);
+}
+.block:last-child { border-bottom: none; }
+
+.block-title {
+  font-family: var(--serif);
+  font-size: 11px;
+  font-weight: normal;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin: 0 0 10px;
+}
+.block-note {
+  color: var(--ink-3);
+  font-style: italic;
+  font-size: 13px;
+  padding: 2px 0 6px;
+}
+
+/* -- Projection selector ---------------------------------------------- */
+
+.proj-family {
+  font-family: var(--serif);
+  font-size: 10px;
+  font-weight: normal;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 10px 0 4px;
+}
+.proj-list {
+  margin: 0 0 12px;
+}
+.proj-item {
+  display: grid;
+  grid-template-columns: 12px 1fr auto;
+  align-items: baseline;
+  gap: 6px;
+  cursor: pointer;
+  padding: 2px 0;
+  font-size: 14px;
+}
+.proj-item input[type=radio] {
+  margin: 0;
+  accent-color: var(--accent);
+}
+.proj-name { color: var(--ink); }
+.proj-property {
+  color: var(--ink-3);
+  font-style: italic;
+  font-size: 11px;
+}
+.proj-item input:checked ~ .proj-name { color: var(--accent); }
+
+/* -- Metadata block --------------------------------------------------- */
+
+.meta {
+  padding: 10px 0 4px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.meta-name {
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.meta-aka {
+  font-style: italic;
+  color: var(--ink-3);
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+.meta-desc {
+  margin-bottom: 6px;
+}
+.meta-cite {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+/* -- Sliders ---------------------------------------------------------- */
+
+.ctrl-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "label value"
+    "range range";
+  align-items: baseline;
+  column-gap: 8px;
+  margin-bottom: 12px;
+}
+.ctrl-label {
+  grid-area: label;
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.ctrl-value {
+  grid-area: value;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.ctrl-range {
+  grid-area: range;
+  width: 100%;
+  margin-top: 3px;
+  accent-color: var(--accent);
+  background: transparent;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: var(--track);
+  border-radius: 0;
+  outline: none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 12px; height: 12px;
+  background: var(--thumb);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+input[type=range]::-moz-range-thumb {
+  width: 12px; height: 12px;
+  background: var(--thumb);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+input[type=range]::-moz-range-track {
+  height: 3px;
+  background: var(--track);
+  border: none;
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sphere projections</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <h1 class="app-title">Sphere projections</h1>
+    <span class="app-subtitle">
+      per-pixel inverse projection, Perlin noise on the sphere, blue equator to white pole
+    </span>
+  </header>
+
+  <aside class="panel panel-left" id="controls" aria-label="controls"></aside>
+
+  <main class="map-area">
+    <canvas id="map"></canvas>
+  </main>
+
+  <aside class="panel panel-right" aria-label="notes">
+    <div class="block">
+      <h3 class="block-title">what you are looking at</h3>
+      <p style="margin:0 0 8px; font-size:13px; color:var(--ink-2);">
+        Each pixel of the canvas is mapped to projection coordinates
+        <span style="font-family:var(--mono);">(x, y)</span> and pushed through the
+        selected projection's inverse to get
+        <span style="font-family:var(--mono);">(&phi;, &lambda;)</span> on the sphere.
+        The (&phi;, &lambda;) then drives a 3D Perlin noise field over the unit
+        sphere and a latitude-driven color mix from blue equator to white pole.
+      </p>
+      <p style="margin:0 0 8px; font-size:13px; color:var(--ink-2);">
+        The library is
+        <span style="font-family:var(--mono);">src/projections/*.js</span> plus
+        <span style="font-family:var(--mono);">src/renderer/*.js</span>. Each
+        projection carries a JS forward/inverse and a GLSL inverse; the renderer
+        splices the GLSL into a fragment shader at compile time. Adding a new
+        projection means writing one file and pushing it to the registry.
+      </p>
+    </div>
+    <div class="block">
+      <h3 class="block-title">source</h3>
+      <p style="margin:0; font-size:12px; color:var(--ink-3); font-family:var(--mono);">
+        Snyder, USGS PP 1395 (1987) &mdash; equation numbers cited per projection.
+      </p>
+    </div>
+  </aside>
+
+  <footer class="app-footer">
+    <span id="status-projection">-</span>
+    <span>webgl2</span>
+  </footer>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
